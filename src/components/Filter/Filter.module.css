@@ -1,21 +1,19 @@
-.box {
-  display: inline-flex;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  margin-top: 30px;
-  background-color: beige;
+.container {
+    display: flex;
+    width: 400px;
+    padding: 20px 50px 40px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px #565656;
 }
 
-.label {
-  display: inline-flex;
-  margin-top: 10px;
-  flex-direction: column;
-  margin-top: 14px;
-  font-weight: bold;
+.label input {
+    width: 300px;
+    height: 40px;
+    margin-top: 12px;
+    border-radius: 4px;
+    outline: none;
 }
 
-.input {
-  margin-top: 10px;
-  border: 1px solid brown;
-  border-radius: 4px;
+.label__text {
+    color: #565656;
 }

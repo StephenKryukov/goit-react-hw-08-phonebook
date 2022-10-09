@@ -1,25 +1,42 @@
 .list {
-  padding: 0;
+    width: 400px;
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px #565656;
+    background-color: #75c3f4;
 }
 
 .item {
-  display: flex;
-  flex-direction: row;
-}
-
-.contact {
-  margin-top: 0;
+    display: flex;
+    padding: 6px 20px;
+    justify-content: space-between;
+    border-radius: 4px;
+    box-shadow: 1px 1px 1px 1px #565656;
+    background-color: #fff;
 }
 
 .button {
-  margin-left: 10px;
-  background-color: beige;
-  border: 1px solid orange;
-  border-radius: 4px;
-  height: 20px;
-  cursor: pointer;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.button:hover {
+    transform: scale(1.1);
+    transition: transform 300ms ease;
 }
 
-.button:hover {
-  background-color: burlywood;
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    min-width: 140px;
+    font-weight: 600;
 }

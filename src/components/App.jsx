@@ -1,48 +1,65 @@
-import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
-import Filter from './Filter/Filter';
+import { useDispatch, useSelector } from 'react-redux';
+import { lazy, Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { Header, Loader, PrivateRoute, RestrictedRoute } from 'components';
+import { getLastUser } from 'redux/authOperations';
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectContacts, selectIsLoading, selectError } from 'redux/selectors';
-import { fetchContacts } from 'redux/operations';
 
-export default function App() {
-  const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+const Home = lazy(() => import('pages/Home'));
+const Contacts = lazy(() => import('pages/Contacts'));
+const RegisterForm = lazy(() => import('pages/RegisterForm'));
+const LoginForm = lazy(() => import('pages/LoginForm'));
+const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+const App = () => {
+    const dispatch = useDispatch();
+    const isShowLoader = useSelector(state => state.auth.isGettingUser);
 
-  return (
-    <div
-      style={{
-        // height: '100vh',
-        // display: 'flex',
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        margin: '20px',
-        width: '700px',
-        // fontSize: 40,
-        // color: '#010101',
-      }}
-    >
-      <h1>Phoneboook 08</h1>
-      <ContactForm />
-      <Filter />
-      <h2 style={{ marginBottom: '0' }}>Contacts</h2>
-      {error && <h2>Error...</h2>}
-      {isLoading && <h3 style={{ color: 'green' }}>Loading...</h3>}
-      <div style={{ color: 'blue', marginTop: '10px' }}></div>
-      {contacts.length > 0 ? (
-        <>
-          <ContactList />
-        </>
-      ) : (
-        <h2>You have not added contacts yet</h2>
-      )}
-    </div>
-  );
-}
+    useEffect(() => {
+        dispatch(getLastUser());
+    }, [dispatch]);
+
+    return (
+        <div className="app">
+            {isShowLoader ? (
+                <Loader />
+            ) : (
+                <>
+                    <Header />
+                    <Suspense fallback={<Loader />}>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route
+                                path="register"
+                                element={
+                                    <RestrictedRoute>
+                                        <RegisterForm />
+                                    </RestrictedRoute>
+                                }
+                            />
+                            <Route
+                                path="login"
+                                element={
+                                    <RestrictedRoute>
+                                        <LoginForm />
+                                    </RestrictedRoute>
+                                }
+                            />
+                            <Route
+                                path="contacts"
+                                element={
+                                    <PrivateRoute>
+                                        <Contacts />
+                                    </PrivateRoute>
+                                }
+                            />
+                            <Route path="*" element={<PageNotFound />} />
+                        </Routes>
+                    </Suspense>
+                </>
+            )}
+        </div>
+    );
+};
+
+export default App;
