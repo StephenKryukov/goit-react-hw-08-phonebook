@@ -32,7 +32,7 @@ const ContactForm = () => {
   return (
     <form className={s.form} onSubmit={submitData}>
       <label className={s.label}>
-        <span className={s.label__text}>Name</span>
+        <span className={s.label__text}>Name:</span>
         <input
           className={s.input}
           type="text"
