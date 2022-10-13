@@ -46,7 +46,7 @@ const ContactForm = () => {
         <FaUser className={s.icon} size="15" />
       </label>
       <label className={s.label}>
-        <span className={s.label__text}>Number</span>
+        <span className={s.label__text}>Number:</span>
         <input
           className={s.input}
           type="tel"
